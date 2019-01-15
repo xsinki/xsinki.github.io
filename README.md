@@ -1,1 +1,1 @@
-# xsinki.github.io/index.php
+# xsinki.github.io/index.html
