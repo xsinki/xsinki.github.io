@@ -542,7 +542,7 @@ section.sec4 {
     display: block;
     color: #ffffff;
     background-color: var(--colorMain);
-    padding: 20px;
+    padding: 12px 20px;
     cursor: pointer;
 }
 
