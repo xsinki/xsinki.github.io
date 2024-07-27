@@ -531,6 +531,11 @@ section.sec4 {
 .form .textarea {
   max-width: 100%;
 }
+.photo-main {
+  width: 300px;
+  border-radius: 100px; 
+  box-shadow: 0 0 7px #666; 
+}
 
 
 
