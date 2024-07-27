@@ -541,7 +541,8 @@ section.sec4 {
     font-size: 2rem;
     text-align: left;
     display: block;
-    background-color: peachpuff;
+    color: #ffffff;
+    background-color: var(--colorMain);
     padding: 20px;
     cursor: pointer;
 }
