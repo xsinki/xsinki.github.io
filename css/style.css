@@ -537,7 +537,7 @@ section.sec4 {
   box-shadow: 0 0 7px #666;
 }
 .text_promo {
-    margin-bottom: 2px;
+    margin-bottom: 5px;
     font-size: 2rem;
     text-align: left;
     display: block;
@@ -545,6 +545,7 @@ section.sec4 {
     background-color: var(--colorMain);
     padding: 12px 20px;
     cursor: pointer;
+    border-radius: 12px;
 }
 .text_bottom {
   min-heigh: 100px;
