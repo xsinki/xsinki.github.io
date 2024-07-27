@@ -536,6 +536,12 @@ section.sec4 {
   border-radius: 250px;
   box-shadow: 0 0 7px #666;
 }
-
+.page_promo {
+  margin-bottom: 150px;
+    font-size: 2rem;
+    text-align: left;
+    display: block;
+    padding: 0 50px;
+}
 
 
