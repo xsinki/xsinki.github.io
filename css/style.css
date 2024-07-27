@@ -125,18 +125,18 @@ LEVEL 2. MENU STYLES
 
 .hamburger:before{
   content :"";
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   background-color: var(--colorMain);
   border-radius: 50%;
 
   position: absolute;
-  bottom: -55px;
-  left: -35px;
+  bottom: -60px;
+  left: -50px;
 }
 
 .hamburger__button{
-  width: 1.4em;
+  width: 2.4em;
   height: 1em;
   font-size: 20px;
 
