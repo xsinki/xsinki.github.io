@@ -546,5 +546,7 @@ section.sec4 {
     padding: 12px 20px;
     cursor: pointer;
 }
-
+.text_bottom {
+  min-heigh: 100px;
+}
 
