@@ -1,70 +1,973 @@
 <!DOCTYPE html>
-<html lang="en" >
-
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>XSINKI WEB DEV</title>
-  
-  
-  
-      <link rel="stylesheet" href="css/style.css">
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Алексей Иванов - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+        }
+        
+        .vanta-canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 1;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background: #1a1a2e;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 2s ease;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #667eea;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .tech-tag {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            background: rgba(26, 26, 46, 0.5);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+<base target="_blank">
 </head>
-
 <body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-xl font-bold gradient-text">Алексей Иванов</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link">Главная</a>
+                    <a href="#about" class="nav-link">Обо мне</a>
+                    <a href="#projects" class="nav-link">Проекты</a>
+                    <a href="#skills" class="nav-link">Навыки</a>
+                    <a href="#contact" class="nav-link">Контакты</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 nav-link">Главная</a>
+                <a href="#about" class="block px-3 py-2 nav-link">Обо мне</a>
+                <a href="#projects" class="block px-3 py-2 nav-link">Проекты</a>
+                <a href="#skills" class="block px-3 py-2 nav-link">Навыки</a>
+                <a href="#contact" class="block px-3 py-2 nav-link">Контакты</a>
+            </div>
+        </div>
+    </nav>
 
-  <div class="page">
-  <div class="page__demo">
-    <div class="page__container">
-      <img class="photo-main" src="/photo_2023-06-19_19-45-09.jpg" alt="">
-      <span class="page__name">ЕВГЕНИЙ ЕРМОЛАЕВ</span>
-      <span class="page__hint">
-        САЙТЫ / ПРОДВИЖЕНИЕ / ЧАТ БОТЫ / ОПЛАТЫ / ОНЛАЙН ШКОЛЫ / ВЕБИНАРЫ
-      </span>
-     <div class="text_promo">
-       <p>Создание персонализированных чат-ботов под задачи вашего бизнеса, интеграция с различными мессенджерами, поддержка разработанных ботов. Вебинарные воронки, интеграция с GetCourse, настройка приема платежей</p>
-     </div>
-     <div class="text_promo">
-       <p>Создание лендингов и сайтов. Настройка SEO. Домены и все что свзанно с сайтом</p>
-     </div>
-      <div class="text_bottom">
-        <p></br></br></p>
-     </div>
-    </div>
-  </div>
-</div>
-<header class="header">
-  <div class="hamburger">
-    <button class="button hamburger__button js-menu__toggle">
-      <span class="hamburger__label">Open menu</span>
-    </button>
-  </div>
-  <nav class="menu">
-    <ul class="list menu__list">
-      <li class="menu__group">
-        <a href="/" class="link menu__link">Home</a>
-      </li>
-      <li class="menu__group">
-        <a href="/about.html" class="link menu__link">About me</a>
-      </li>
-      <li class="menu__group">
-        <a href="/portfolio.html" class="link menu__link">Portfolio</a>
-      </li>
-      <li class="menu__group">
-        <a href="/contacts.html" class="link menu__link">Contacts</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-  
-  
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative">
+        <div id="vanta-bg" class="absolute inset-0"></div>
+        <div class="content-overlay text-center max-w-4xl mx-auto px-4">
+            <div class="floating-element mb-8">
+                <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+                    <i class="fas fa-code text-5xl text-white"></i>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text">Full Stack</span><br>
+                <span class="text-white">Developer</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Создаю современные веб-приложения с использованием передовых технологий и лучших практик разработки
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#projects" class="btn-primary px-8 py-3 rounded-full text-white font-semibold">
+                    Посмотреть работы
+                </a>
+                <a href="#contact" class="border border-purple-500 text-purple-400 px-8 py-3 rounded-full font-semibold hover:bg-purple-500 hover:text-white transition-all">
+                    Связаться со мной
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <script  src="js/index.js"></script>
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Обо мне</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Я - опытный Full Stack разработчик с 5+ лет опытом в создании масштабируемых веб-приложений
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="bg-gray-800 rounded-2xl p-8 card-hover">
+                        <h3 class="text-2xl font-bold mb-6 text-purple-400">Моя история</h3>
+                        <p class="text-gray-300 mb-4">
+                            Начал свой путь в веб-разработке 5 лет назад с простых landing page. Сегодня я создаю сложные 
+                            enterprise-приложения, работаю с микросервисной архитектурой и помогаю командам 
+                            строить масштабируемые решения.
+                        </p>
+                        <p class="text-gray-300 mb-4">
+                            Мне нравится решать сложные задачи, оптимизировать производительность и создавать 
+                            пользовательские интерфейсы, которые радуют глаз и работают быстро.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-6">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-gray-800 rounded-xl p-6 text-center card-hover">
+                            <div class="text-3xl font-bold gradient-text mb-2">50+</div>
+                            <div class="text-gray-300">Завершенных проектов</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-6 text-center card-hover">
+                            <div class="text-3xl font-bold gradient-text mb-2">5+</div>
+                            <div class="text-gray-300">Лет опыта</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-6 text-center card-hover">
+                            <div class="text-3xl font-bold gradient-text mb-2">25+</div>
+                            <div class="text-gray-300">Довольных клиентов</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-xl p-6 text-center card-hover">
+                            <div class="text-3xl font-bold gradient-text mb-2">100%</div>
+                            <div class="text-gray-300">Качество работы</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Мои проекты</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Некоторые из моих последних работ, которые демонстрируют мои навыки и опыт
+                </p>
+            </div>
+            
+            <div class="project-grid">
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">E-commerce платформа</h3>
+                        <p class="text-gray-300 mb-4">
+                            Полнофункциональная платформа для онлайн-торговли с поддержкой множества продавцов, 
+                            реальным временем и микросервисной архитектурой.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Docker</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-teal-600 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Аналитическая панель</h3>
+                        <p class="text-gray-300 mb-4">
+                            Интерактивная панель аналитики с визуализацией данных, 
+                            real-time обновлениями и продвинутыми графиками.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Vue.js</span>
+                            <span class="tech-tag">D3.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center">
+                        <i class="fas fa-robot text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">AI Ассистент</h3>
+                        <p class="text-gray-300 mb-4">
+                            Интеллектуальный ассистент с обработкой естественного языка, 
+                            машинным обучением и интеграцией с различными API.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-yellow-600 to-orange-600 flex items-center justify-center">
+                        <i class="fas fa-gamepad text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Игровой портал</h3>
+                        <p class="text-gray-300 mb-4">
+                            Современный игровой портал с системой достижений, 
+                            мультиплеером и интеграцией с социальными сетями.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Socket.io</span>
+                            <span class="tech-tag">WebGL</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center">
+                        <i class="fas fa-music text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Музыкальный стриминг</h3>
+                        <p class="text-gray-300 mb-4">
+                            Платформа для стриминга музыки с рекомендациями, 
+                            плейлистами и социальными функциями.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">GraphQL</span>
+                            <span class="tech-tag">Prisma</span>
+                            <span class="tech-tag">Kubernetes</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl overflow-hidden card-hover fade-in">
+                    <div class="h-48 bg-gradient-to-br from-teal-600 to-cyan-600 flex items-center justify-center">
+                        <i class="fas fa-mobile-alt text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Мобильное приложение</h3>
+                        <p class="text-gray-300 mb-4">
+                            Кроссплатформенное мобильное приложение для управления задачами 
+                            с офлайн-режимом и синхронизацией.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tech-tag">React Native</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">TypeScript</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="text-purple-400 hover:text-purple-300 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Навыки и технологии</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Мой технический арсенал и уровень владения различными технологиями
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fab fa-js-square text-3xl text-yellow-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">Frontend</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">JavaScript/TypeScript</span>
+                                <span class="text-purple-400">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">React/Next.js</span>
+                                <span class="text-purple-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Vue.js</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Angular</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-server text-3xl text-green-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">Backend</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Node.js</span>
+                                <span class="text-purple-400">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Python/Django</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">PHP/Laravel</span>
+                                <span class="text-purple-400">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">GraphQL</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-database text-3xl text-blue-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">Database</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">PostgreSQL</span>
+                                <span class="text-purple-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">MongoDB</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Redis</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">MySQL</span>
+                                <span class="text-purple-400">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fab fa-docker text-3xl text-cyan-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">DevOps</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Docker</span>
+                                <span class="text-purple-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Kubernetes</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">AWS</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">CI/CD</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-tools text-3xl text-orange-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">Tools</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Git</span>
+                                <span class="text-purple-400">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Webpack</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Figma</span>
+                                <span class="text-purple-400">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Jest</span>
+                                <span class="text-purple-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-2xl p-6 card-hover fade-in">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-mobile-alt text-3xl text-green-400 mr-3"></i>
+                        <h3 class="text-xl font-bold">Mobile</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">React Native</span>
+                                <span class="text-purple-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Flutter</span>
+                                <span class="text-purple-400">70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">Ionic</span>
+                                <span class="text-purple-400">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300">PWA</span>
+                                <span class="text-purple-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold gradient-text mb-4">Связаться со мной</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Готов обсудить ваш проект и предложить лучшее решение
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <div class="bg-gray-900 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-purple-400">Контактная информация</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-300">Email</div>
+                                    <div class="text-white font-semibold">alexey.ivanov@example.com</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-300">Телефон</div>
+                                    <div class="text-white font-semibold">+7 (999) 123-45-67</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-300">Местоположение</div>
+                                    <div class="text-white font-semibold">Москва, Россия</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold mb-4 text-purple-400">Социальные сети</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                    <i class="fab fa-github text-white"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                    <i class="fab fa-linkedin text-white"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                    <i class="fab fa-telegram text-white"></i>
+                                </a>
+                                <a href="#" class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                    <i class="fab fa-twitter text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="bg-gray-900 rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-purple-400">Отправить сообщение</h3>
+                        <form class="contact-form space-y-6">
+                            <div>
+                                <label class="block text-gray-300 mb-2">Имя</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg" placeholder="Ваше имя" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg" placeholder="Ваш email" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Тема</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg" placeholder="Тема сообщения" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-300 mb-2">Сообщение</label>
+                                <textarea rows="5" class="w-full px-4 py-3 rounded-lg" placeholder="Ваше сообщение" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full py-3 rounded-lg text-white font-semibold">
+                                Отправить сообщение
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="text-2xl font-bold gradient-text mb-4">Алексей Иванов</div>
+                <p class="text-gray-400 mb-4">Full Stack Developer • Москва, Россия</p>
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-sm">
+                    © 2024 Алексей Иванов. Все права защищены.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Vanta.js background
+        VANTA.BIRDS({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x0a0a0a,
+            color1: 0x667eea,
+            color2: 0x764ba2,
+            birdSize: 1.20,
+            wingSpan: 25.00,
+            speedLimit: 3.00,
+            separation: 20.00,
+            alignment: 20.00,
+            cohesion: 20.00,
+            quantity: 3.00
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate skill bars when they come into view
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillFills = entry.target.querySelectorAll('.skill-fill');
+                    skillFills.forEach(fill => {
+                        const width = fill.style.width;
+                        fill.style.width = '0%';
+                        setTimeout(() => {
+                            fill.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('#skills .card-hover').forEach(card => {
+            skillObserver.observe(card);
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за ваше сообщение! Я свяжусь с вами в ближайшее время.');
+            this.reset();
+        });
+
+        // Dynamic navigation highlight
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>
